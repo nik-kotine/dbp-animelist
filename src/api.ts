@@ -5,7 +5,6 @@ const api = axios.create({
   baseURL: 'https://api.fake-anime.com',
 });
 
-// Agrega automáticamente la API Key si está en localStorage
 api.interceptors.request.use((config) => {
   const apiKey = localStorage.getItem('apiKey');
   if (apiKey) {
@@ -14,7 +13,6 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Simula el backend
 const mock = new AxiosMockAdapter(api, { delayResponse: 500 });
 
 let characters = [
@@ -22,7 +20,6 @@ let characters = [
   { id: 2, name: 'Naruto', anime: 'Naruto', power: 8500, ability: 'Rasengan', comment: '' },
 ];
 
-// GET /characters
 mock.onGet('/characters').reply((config) => {
   if (!config.headers || !config.headers['x-api-key']) {
     return [401, { message: 'No API Key' }];
@@ -30,7 +27,6 @@ mock.onGet('/characters').reply((config) => {
   return [200, characters];
 });
 
-// POST /characters
 mock.onPost('/characters').reply((config) => {
   const data = JSON.parse(config.data);
   if (characters.find((c) => c.name === data.name)) {
@@ -41,7 +37,6 @@ mock.onPost('/characters').reply((config) => {
   return [201, nuevo];
 });
 
-// GET /characters/:id
 mock.onGet(/\/characters\/\d+/).reply((config) => {
   const id = Number(config.url!.split('/').pop());
   const char = characters.find(c => c.id === id);

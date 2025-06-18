@@ -7,11 +7,11 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navigation';
 
 function App() {
-  const isLoggedIn = !!localStorage.getItem('apiKey'); // 👈 detecta si hay sesión
+  const isLoggedIn = !!localStorage.getItem('apiKey');
 
   return (
     <BrowserRouter>
-      {isLoggedIn && <Navbar />} {/* 👈 muestra solo si hay sesión */}
+      {isLoggedIn && <Navbar />}
 
       <Routes>
         <Route path="/login" element={<Login />} />
